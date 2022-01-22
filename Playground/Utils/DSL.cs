@@ -18,6 +18,14 @@ namespace Playground.Utils
             select.SelectByText(value);
         }
 
+        public void SelValue(By selector, string value)
+        {
+            IWebElement element = GetDriver().FindElement(selector);
+            SelectElement select = new SelectElement(element);
+            select.SelectByValue(value);
+        }
+
+
         public void Navigate(string value)
         {
             GetDriver().Navigate().GoToUrl(value);
@@ -26,6 +34,11 @@ namespace Playground.Utils
         public void Click(By selector)
         {
             GetDriver().FindElement(selector).Click();
+        }
+
+        public void SwitchTab()
+        {
+            GetDriver().SwitchTo().Window(GetDriver().WindowHandles[1]);
         }
     }
 }
