@@ -11,6 +11,11 @@ namespace Playground.Utils
             GetDriver().FindElement(selector).SendKeys(value);
         }
 
+        public string GetText(By selector)
+        {
+            return GetDriver().FindElement(selector).Text;
+        }
+
         public void SelText(By selector, string value)
         {
             IWebElement element = GetDriver().FindElement(selector);
