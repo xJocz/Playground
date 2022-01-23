@@ -23,7 +23,7 @@ namespace Playground.Pages
         public RegisterAccountPage()
         {
             interactions = new DSL();
-            faker = new Faker("pt_BR");
+            faker = new Faker();
         }
 
         public string RegisterNewUser(string pass, string passConfirmation)
