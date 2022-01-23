@@ -9,15 +9,27 @@ namespace Playground.Tests
         RegisterAccountPage registerPage;
 
         [Test]
-        [TestCase("Denis", "Almeida", "test@test.br", "11974391234", "Qwer!234", "Qwer!234")]
-        [TestCase("Carlos", "Tito", "testing@test.qa", "11999101888", "123Senh@", "123Senh@")]
-        [TestCase("Milena", "Naiara", "testingagain@test.ce", "11974881241", "1234test", "1234test")]
-        public void ShouldRegisterAValidNewUser(string firstName, string lastName, string email, string phone, string pass, string passConfirmation)
+        [TestCase("Qwer!234", "Qwer!234")]
+        [TestCase("123Senh@", "123Senh@")]
+        [TestCase("1234test", "1234test")]
+        public void ShouldRegisterAValidNewUser(string pass, string passConfirmation)
         {
             HomePage homePage = new HomePage(URL);
             registerPage = homePage.navigateToRegisterPage();
-            var result = registerPage.RegisterNewUser(firstName, lastName, email, phone, pass, passConfirmation);
+            var result = registerPage.RegisterNewUser(pass, passConfirmation);
             Assert.AreEqual("Your Account Has Been Created!", result);
+        }
+
+        [Test]
+        [TestCase("Qwer!234", "123Senh@")]
+        [TestCase("123Senh@", "Qwer!234")]
+        [TestCase("1234test", "test1234")]
+        public void ShouldRegisterANewUserWithInvalidPassword(string pass, string passConfirmation)
+        {
+            HomePage homePage = new HomePage(URL);
+            registerPage = homePage.navigateToRegisterPage();
+            var result = registerPage.RegisterNewUserWithInvalidPassword(pass, passConfirmation);
+            Assert.AreEqual("Password confirmation does not match password!", result);
         }
     }
 }

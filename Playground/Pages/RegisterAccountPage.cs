@@ -17,26 +17,39 @@ namespace Playground.Pages
         private By chkTerms = By.Name("agree");
         private By btnContinue = By.XPath("//input[@type='submit']");
         private By lblMessage = By.XPath("//div[@id='common-success']/div/div/h1");
+        private By lblPassword = By.XPath("//div[@class='text-danger']");
         private string expectValidMessage = "Your Account Has Been Created!";
     
         public RegisterAccountPage()
         {
             interactions = new DSL();
-            faker = new Faker();
+            faker = new Faker("pt_BR");
         }
 
-        public string RegisterNewUser(string firstName, string lastName, string email, string phone, string pass, string passConfirmation)
+        public string RegisterNewUser(string pass, string passConfirmation)
         {
-            interactions.SetText(inpFirstName, firstName);
-            interactions.SetText(inpLastName, lastName);
-            interactions.SetText(inpEmail, email);
+            interactions.SetText(inpFirstName, faker.Name.FirstName());
+            interactions.SetText(inpLastName, faker.Name.LastName());
             interactions.SetText(inpEmail, faker.Internet.Email());
-            interactions.SetText(inpPhone, phone);
+            interactions.SetText(inpPhone, faker.Phone.PhoneNumber());
             interactions.SetText(inpPass, pass);
             interactions.SetText(inpPassConfirmation, passConfirmation);
             interactions.Click(chkTerms);
             interactions.Click(btnContinue);
             return interactions.GetText(lblMessage);
+        }
+
+        public string RegisterNewUserWithInvalidPassword(string pass, string passConfirmation)
+        {
+            interactions.SetText(inpFirstName, faker.Name.FirstName());
+            interactions.SetText(inpLastName, faker.Name.LastName());
+            interactions.SetText(inpEmail, faker.Internet.Email());
+            interactions.SetText(inpPhone, faker.Phone.PhoneNumber());
+            interactions.SetText(inpPass, pass);
+            interactions.SetText(inpPassConfirmation, passConfirmation);
+            interactions.Click(chkTerms);
+            interactions.Click(btnContinue);
+            return interactions.GetText(lblPassword);
         }
     }
 }
