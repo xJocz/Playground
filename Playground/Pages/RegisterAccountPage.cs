@@ -1,12 +1,13 @@
 ﻿using Playground.Utils;
 using OpenQA.Selenium;
-using NUnit.Framework;
+using Bogus;
 
 namespace Playground.Pages
 {
     class RegisterAccountPage
     {
         private DSL interactions;
+        private Faker faker;
         private By inpFirstName = By.Id("input-firstname");
         private By inpLastName = By.Id("input-lastname");
         private By inpEmail = By.Id("input-email");
@@ -21,6 +22,7 @@ namespace Playground.Pages
         public RegisterAccountPage()
         {
             interactions = new DSL();
+            faker = new Faker();
         }
 
         public string RegisterNewUser(string firstName, string lastName, string email, string phone, string pass, string passConfirmation)
@@ -28,6 +30,7 @@ namespace Playground.Pages
             interactions.SetText(inpFirstName, firstName);
             interactions.SetText(inpLastName, lastName);
             interactions.SetText(inpEmail, email);
+            interactions.SetText(inpEmail, faker.Internet.Email());
             interactions.SetText(inpPhone, phone);
             interactions.SetText(inpPass, pass);
             interactions.SetText(inpPassConfirmation, passConfirmation);
